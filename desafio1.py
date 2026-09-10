@@ -24,7 +24,8 @@ class Submissao:
         Xs = self._padronizar(X_duplo)
         d = X.shape[1]
 
-        num_explicitas = 13 if d == 2 else (2 * d + 1)
+        explicitas_m = self._extrair_caracteristicas_explicitas(Xs[:1])
+        num_explicitas = explicitas_m.shape[1]
         num_fourier = self.DIM_MAX - num_explicitas
 
         sigma_base = self._estimar_sigma_base(Xs)
@@ -48,7 +49,8 @@ class Submissao:
 
     def _estimar_sigma_base(self, Xs: torch.Tensor) -> float:
         """Estima a distância mediana entre os pontos para calibrar a escala gaussiana (sigma)."""
-        amostra = Xs[: min(300, len(Xs))]
+        indices = torch.randperm(len(Xs))[:300]
+        amostra = Xs[indices]
         distancias_quadradas = torch.cdist(amostra, amostra) ** 2
         valores_positivos = distancias_quadradas[distancias_quadradas > 0]
         mediana = valores_positivos.median().item() if len(valores_positivos) > 0 else 1.0
@@ -57,7 +59,7 @@ class Submissao:
     def _gerar_pesos_fourier(self, d: int, num_fourier: int, sigma_base: float) -> None:
         """Gera a matriz W e o vetor b com gerador determinístico em múltiplas escalas."""
         gerador = torch.Generator().manual_seed(2026)
-        escalas = [0.125, 0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0]
+        escalas = [0.25, 0.5, 1.0, 1.5, 2.0, 3.0]
         colunas_por_escala = math.ceil(num_fourier / len(escalas))
 
         blocos_W = []
@@ -80,7 +82,6 @@ class Submissao:
             angulo_theta = torch.atan2(Xs[:, 1:2], Xs[:, 0:1])
             caracteristicas.extend([
                 produto_cruzado,
-                angulo_theta,
                 torch.sin(angulo_theta),
                 torch.cos(angulo_theta),
                 torch.sin(2 * angulo_theta),
@@ -94,7 +95,7 @@ class Submissao:
     def _gerar_caracteristicas_fourier(self, Xs: torch.Tensor, num_fourier: int) -> torch.Tensor:
         """Aplica a projeção de Fourier Aleatória (RFF) multi-escala."""
         projecao = Xs @ self.matriz_W[:, :num_fourier] + self.vetor_b[:num_fourier]
-        return math.sqrt(2.0 / num_fourier) * torch.cos(projecao)
+        return math.sqrt(2.0) * torch.cos(projecao)
 
 # =============================================================================
 # Harness (não edite daqui para baixo)
