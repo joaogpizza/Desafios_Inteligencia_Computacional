@@ -1,19 +1,17 @@
 import torch
 import torch.nn as nn
+import math
 
 def ativacao(x: torch.Tensor) -> torch.Tensor:
-    return torch.selu(x)
+    return torch.tanh(x) * (1/math.sqrt(2))
 
 @torch.no_grad()
 def inicializar(W: torch.Tensor, b: torch.Tensor,
                  fan_in: int, fan_out: int, camada: int, n_camadas: int) -> None:
-    
-    #lam = 1.0507009873554805
-    #fator_1a_camada = 0.5          
-    std = 1.0 / fan_in ** 0.5
-
-    #if camada == 1:
-    #   std *= fator_1a_camada
-
+    if camada == 1:
+        fator_tabela = 1.0 
+    else:
+        fator_tabela = 2.5
+    std = math.sqrt(fator_tabela / fan_in)
     nn.init.normal_(W, mean=0.0, std=std)
     nn.init.zeros_(b)
