@@ -27,3 +27,4 @@ class DiceLoss(nn.Module):
         dice = (2.0 * intersecao + self.smooth) / (probavilidades_pred.sum(dim=1) + target.sum(dim=1) + self.smooth)
         
         return 1.0 - dice.mean()
+    

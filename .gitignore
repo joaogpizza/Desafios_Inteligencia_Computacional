@@ -1,1 +1,3 @@
-src_tema/data/raw/*/*/*.tif
+src_tema/data/raw/WHU/
+src_tema/data/patches_gt/*/
+src_tema/data/patches_imgs/*/
