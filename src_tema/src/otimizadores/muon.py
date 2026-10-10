@@ -18,7 +18,7 @@ class MuonAdamW(Optimizer):
         # separa os parâmetros com base na dimensionalidade
         for group in self.param_groups:
             for p in group['params']:
-                if p.ndim >= 2:
+                if p.ndim == 2:
                     self.muon_params.append(p)
                 else:
                     self.adamw_params.append(p)
