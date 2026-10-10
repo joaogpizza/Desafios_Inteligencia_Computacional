@@ -11,6 +11,7 @@ PATH_RAIZ = os.path.dirname(
 
 PATH_DATA = os.path.join(PATH_RAIZ, "data")
 PATH_SCRIPTS = os.path.join(PATH_RAIZ, "scripts")
+PATH_RESULTS = os.path.join(PATH_RAIZ, "results")
 
 PATH_RAW = os.path.join(PATH_DATA, "raw")
 PATH_WHU = os.path.join(PATH_RAW, "WHU")
@@ -36,3 +37,18 @@ PATH_PATCHES_GT = os.path.join(PATH_DATA, "patches_gt")
 PATH_PATCHES_GT_TRAIN = os.path.join(PATH_PATCHES_GT, "train")
 PATH_PATCHES_GT_VAL = os.path.join(PATH_PATCHES_GT, "val")
 PATH_PATCHES_GT_TEST = os.path.join(PATH_PATCHES_GT, "test")
+
+PATH_PLOTS = os.path.join(PATH_RESULTS, "plots")
+PATH_PLOTS_CURVAS_APRENDIZADO = os.path.join(PATH_PLOTS, "curvas_aprendizado")
+PATH_PLOTS_CURVA_APRENDIZADO_LOSS = os.path.join(
+    PATH_PLOTS_CURVAS_APRENDIZADO,
+    "loss"
+)
+PATH_PLOTS_CURVA_APRENDIZADO_MDICE = os.path.join(
+    PATH_PLOTS_CURVAS_APRENDIZADO,
+    "mdice"
+)
+PATH_PLOTS_CURVA_APRENDIZADO_TAXA_APRENDIZADO = os.path.join(
+    PATH_PLOTS_CURVAS_APRENDIZADO,
+    "taxa_aprendizado"
+)
