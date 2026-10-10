@@ -41,7 +41,7 @@ class MuonAdamW(Optimizer):
         if len(self.adamw_params) > 0:
             self.adamw.step()
         
-        # passo do Muon para parâmetros >= 2D
+        # passo do Muon para parâmetros == 2D
         for group in self.param_groups:
             lr = group['lr']
             momentum = group['momentum']
