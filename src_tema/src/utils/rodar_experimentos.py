@@ -25,7 +25,7 @@ def rodar_experimento_completo(
     lr: float = TAXA_APRENDIZADO,
     num_epocas: int = NUM_EPOCAS,
     aplicar_aug: bool = False,
-    num_workers: int = 4,
+    num_workers: int = 0,
     seed: int = 42,
     **kwargs
 ) -> dict:

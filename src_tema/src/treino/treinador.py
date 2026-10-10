@@ -35,9 +35,10 @@ def treinar_epoca(
     dataloader, 
     f_loss, 
     otimizador, 
+    scaler,
     camadas_monitoradas: list,
     passo_global: int, 
-    k: int = 25
+    k: int = 50
 ) -> tuple:
     """Treina o modelo por uma única época, gerando os logs requisitados a cada k passos."""
     modelo.train()
@@ -48,24 +49,33 @@ def treinar_epoca(
         mascaras = mascaras.to(DEVICE)
 
         otimizador.zero_grad()
-        logits = modelo(inputs)
-        perda = f_loss(logits, mascaras)
-        perda.backward()
+        
+        with torch.amp.autocast(device_type="cuda"):
+            logits = modelo(inputs)
+            perda = f_loss(logits, mascaras)
+        
+        scaler.scale(perda).backward()
 
-        g = torch.sqrt(sum((p.grad**2).sum() for p in modelo.parameters() if p.grad is not None))
-        th = torch.sqrt(sum((p**2).sum() for p in modelo.parameters()))
-        antes = {n: p.detach().clone() for n, p in modelo.named_parameters() if n in camadas_monitoradas}
+        vai_gerar_log = (passo_global + 1) % k == 0
+
+        scaler.unscale_(otimizador)
+
+        if vai_gerar_log:
+            g = torch.sqrt(sum((p.grad**2).sum() for p in modelo.parameters() if p.grad is not None))
+            th = torch.sqrt(sum((p**2).sum() for p in modelo.parameters()))
+            antes = {n: p.detach().clone() for n, p in modelo.named_parameters() if n in camadas_monitoradas}
 
         torch.nn.utils.clip_grad_norm_(modelo.parameters(), max_norm=1.0)
 
-        otimizador.step()
+        scaler.step(otimizador)
+        scaler.update()
         
-        rho = {n: ((p - antes[n]).norm() / (antes[n].norm() + 1e-8)).item()
-               for n, p in modelo.named_parameters() if n in camadas_monitoradas}
-
         passo_global += 1
 
-        if passo_global % k == 0:
+        if vai_gerar_log:
+            rho = {n: ((p - antes[n]).norm() / (antes[n].norm() + 1e-8)).item()
+                   for n, p in modelo.named_parameters() if n in camadas_monitoradas}
+
             lr_atual = otimizador.param_groups[0]["lr"]
             adicionar_log(
                 nome=nome_modelo,
@@ -108,6 +118,8 @@ def treinar_modelo(
     scheduler = pegar_scheduler(nome_scheduler, otimizador, **kwargs.get('scheduler_kwargs', {}))
     early_stopper = pegar_early_stopper(nome_early_stopper, **kwargs.get('early_stopper_kwargs', {}))
 
+    scaler = torch.amp.GradScaler("cuda")
+
     camadas_monitoradas = obter_camadas_alvo_monitoramento(modelo)
 
     historico_loss_treino = []
@@ -131,9 +143,10 @@ def treinar_modelo(
             dataloader=dataloader_treino,
             f_loss=f_loss,
             otimizador=otimizador,
+            scaler=scaler,
             camadas_monitoradas=camadas_monitoradas,
             passo_global=passo_global,
-            k=25
+            k=50
         )
 
         loss_val, mdice_val, _ = validar(modelo, dataloader_val, f_loss)
@@ -158,8 +171,9 @@ def treinar_modelo(
             print(f"\n[AVISO] Treinamento do modelo {nome_modelo} divergiu na época {epoca}.")
             break
 
+        print(f'Final da epoca {epoca+1}, mdice = {mdice_val}')
+        
         _ = early_stopper(perda_val=loss_val, perda_treino=loss_treino, metrica_val=mdice_val)
-
         if early_stopper.parada_antecipada:
             print(f"\n[INFO] Early Stopping engatilhado de forma precoce na época {epoca}.")
             break
