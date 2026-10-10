@@ -7,7 +7,7 @@ from typing import List
 from src.utils.paths import (
     PATH_PLOTS_CURVAS_APRENDIZADO_LOSS,
     PATH_PLOTS_CURVAS_APRENDIZADO_MDICE,
-    PATH_PLOTS_CURVA_APRENDIZADO_TAXA_APRENDIZADO
+    PATH_PLOTS_CURVAS_APRENDIZADO_TAXA_APRENDIZADO
 )
 
 def plotar_losses(nome: str, historico_loss_treino: List[float], historico_loss_val: List[float]):
@@ -64,6 +64,6 @@ def plotar_taxa_aprendizado(nome: str, historico_lr: List[float]) -> None:
     plt.legend()
     plt.grid(True, linestyle='--', alpha=0.7)
     
-    caminho_salvamento = os.path.join(PATH_PLOTS_CURVA_APRENDIZADO_TAXA_APRENDIZADO, f"lr_{nome}.png") 
+    caminho_salvamento = os.path.join(PATH_PLOTS_CURVAS_APRENDIZADO_TAXA_APRENDIZADO, f"lr_{nome}.png") 
     plt.savefig(caminho_salvamento, bbox_inches='tight')
     plt.close()
