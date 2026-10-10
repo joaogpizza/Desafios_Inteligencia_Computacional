@@ -27,6 +27,7 @@ def rodar_experimento_completo(
     aplicar_aug: bool = False,
     num_workers: int = 0,
     seed: int = 42,
+    fracao_dados: float = 1.0,
     **kwargs
 ) -> dict:
     """
@@ -59,7 +60,8 @@ def rodar_experimento_completo(
     print("[INFO] Criando DataLoaders (Treino, Validação, Teste)...")
     dl_treino, dl_val, dl_teste = criar_dataloaders(
         num_workers=num_workers, 
-        aplicar_aug=aplicar_aug
+        aplicar_aug=aplicar_aug,
+        fracao_dados=fracao_dados
     )
 
     print("[INFO] Iniciando rotina de treinamento...")

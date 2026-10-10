@@ -15,7 +15,8 @@ from configs.basicas import TAM_BATCH
 
 def criar_dataloaders(
     num_workers: int, 
-    aplicar_aug: bool = False
+    aplicar_aug: bool = False,
+    fracao_dados: float = 1.0
 ) -> Tuple[DataLoader, DataLoader, DataLoader]:
     """
     Cria os dataloaders de treino, validação e teste do dataset.
@@ -28,21 +29,24 @@ def criar_dataloaders(
         diretorio_imagens=PATH_PATCHES_IMGS_TRAIN,
         diretorio_mascaras=PATH_PATCHES_GT_TRAIN,
         extensao_imagem=".png",
-        aplicar_aug=aplicar_aug
+        aplicar_aug=aplicar_aug,
+        fracao_dados=fracao_dados
     )
 
     dataset_val = HistologiaDataset(
         diretorio_imagens=PATH_PATCHES_IMGS_VAL,
         diretorio_mascaras=PATH_PATCHES_GT_VAL,
         extensao_imagem=".png",
-        aplicar_aug=False
+        aplicar_aug=False,
+        fracao_dados=fracao_dados
     )
 
     dataset_teste = HistologiaDataset(
         diretorio_imagens=PATH_PATCHES_IMGS_TEST,
         diretorio_mascaras=PATH_PATCHES_GT_TEST,
         extensao_imagem=".png",
-        aplicar_aug=False
+        aplicar_aug=False,
+        fracao_dados=fracao_dados
     )
 
     dl_treino = DataLoader(

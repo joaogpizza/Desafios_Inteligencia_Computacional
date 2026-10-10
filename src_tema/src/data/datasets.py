@@ -15,22 +15,23 @@ from torch.utils.data import Dataset
 from src.data.transformadas import obter_transformacoes
 
 class HistologiaDataset(Dataset):
-    """
-    Dataset PyTorch para tarefas de segmentação semântica em imagens
-    histológicas.
-    """
     def __init__(
         self, 
         diretorio_imagens: str, 
         diretorio_mascaras: str, 
         extensao_imagem: str, 
-        aplicar_aug: bool = False
+        aplicar_aug: bool = False,
+        fracao_dados: float = 1.0
     ) -> None:
         self.diretorio_imagens = diretorio_imagens
         self.diretorio_mascaras = diretorio_mascaras
         self.extensao_imagem = extensao_imagem
         self.transformacoes = obter_transformacoes(aplicar_aug)
         self.amostras = self._mapear_arquivos()
+
+        if 0.0 < fracao_dados < 1.0:
+            num_amostras = max(1, int(len(self.amostras) * fracao_dados))
+            self.amostras = self.amostras[:num_amostras]
 
     def _mapear_arquivos(self) -> List[Tuple[str, str]]:
         """
