@@ -1,3 +1,5 @@
 src_tema/data/raw/WHU/
 src_tema/data/patches_gt/*/
 src_tema/data/patches_imgs/*/
+src_tema/results/modelos/*
+src_tema/results/plots/curvas_aprendizado/*/*

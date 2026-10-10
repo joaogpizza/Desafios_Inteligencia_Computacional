@@ -8,6 +8,10 @@ PATH_RAIZ = os.path.dirname(
         )
     )
 )
+PATH_DESAFIO3 = os.path.join(
+    os.path.dirname(PATH_RAIZ),
+    "desafio3"
+)
 
 PATH_DATA = os.path.join(PATH_RAIZ, "data")
 PATH_SCRIPTS = os.path.join(PATH_RAIZ, "scripts")
@@ -52,3 +56,20 @@ PATH_PLOTS_CURVA_APRENDIZADO_TAXA_APRENDIZADO = os.path.join(
     PATH_PLOTS_CURVAS_APRENDIZADO,
     "taxa_aprendizado"
 )
+
+PATH_RESULTS_TABELAS = os.path.join(
+    PATH_RESULTS,
+    "tabelas"
+)
+PATH_RESULTS_TABELAS_TABELA_COMPLETA = os.path.join(
+    PATH_RESULTS_TABELAS,
+    "tabela_completa.csv"
+)
+
+PATH_RESULTS_MODELOS = os.path.join(
+    PATH_RESULTS,
+    "modelos"
+)
+
+PATH_LOGS = os.path.join(PATH_DESAFIO3, "logs")
+PATH_TABELA_EXPERIMENTOS = os.path.join(PATH_DESAFIO3, "experimentos.csv")
