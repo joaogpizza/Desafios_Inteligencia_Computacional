@@ -1,0 +1,64 @@
+Etapa 1 terminada, resultados:
+Modelos treinados: UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed42, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed125, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed2026
+--------------------------------------------------
+Etapa 1 terminada, resultados:
+Modelos treinados: UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed42, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed125, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed2026
+--------------------------------------------------
+Etapa 1 terminada, resultados:
+Modelos treinados: UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed42, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed125, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed2026
+--------------------------------------------------
+Etapa 1 terminada, resultados:
+Modelos treinados: UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed42, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed125, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed2026
+--------------------------------------------------
+Etapa 1 terminada, resultados:
+Modelos treinados: UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed42, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed125, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed2026
+--------------------------------------------------
+Etapa 1 terminada, resultados:
+Modelos treinados: UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed42, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed125, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed2026
+--------------------------------------------------
+Etapa 2 terminada, resultados:
+Varredura concluída para SGD, ADAM, ADAMW, RMSPROP, MUON nas LRs 10^-1 a 10^-5.
+--------------------------------------------------
+Etapa 3 terminada, resultados:
+Otimizadores escolhidos: ['MUON', 'ADAMW'].
+Testados com Constant, Cosseno, Warmup Cosseno e Plateau.
+--------------------------------------------------
+Etapa 1 terminada, resultados:
+Modelos treinados: UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed42, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed125, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed2026
+--------------------------------------------------
+Etapa 1 terminada, resultados:
+Modelos treinados: UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed42, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed125, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed2026
+--------------------------------------------------
+Etapa 1 terminada, resultados:
+Modelos treinados: UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed42, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed125, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed2026
+--------------------------------------------------
+Etapa 2 terminada, resultados:
+Varredura concluída para SGD, ADAM, ADAMW, RMSPROP, MUON nas LRs 10^-1 a 10^-5.
+--------------------------------------------------
+Etapa 3 terminada, resultados:
+Otimizadores escolhidos: ['MUON', 'ADAMW'].
+Testados com Constant, Cosseno, Warmup Cosseno e Plateau.
+--------------------------------------------------
+Etapa 1 terminada, resultados:
+Modelos treinados: UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed42, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed125, UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.001_augTrue_seed2026
+--------------------------------------------------
+Etapa 2 terminada, resultados:
+Varredura concluída para SGD, ADAM, ADAMW, RMSPROP, MUON nas LRs 10^-1 a 10^-5.
+--------------------------------------------------
+Etapa 3 terminada, resultados:
+Otimizadores escolhidos: ['MUON', 'ADAMW'].
+Testados com Constant, Cosseno, Warmup Cosseno e Plateau.
+--------------------------------------------------
+Etapa 4 terminada, resultados:
+Top 3 configurações treinadas nas seeds 42, 125 e 2026.
+Modelos Gerados:
+UNET_FOCALDICE_MUON_WARMUP_COSSENO_PADRAO_lr0.0001_augTrue_seed42
+UNET_FOCALDICE_MUON_WARMUP_COSSENO_PADRAO_lr0.0001_augTrue_seed125
+UNET_FOCALDICE_MUON_WARMUP_COSSENO_PADRAO_lr0.0001_augTrue_seed2026
+UNET_FOCALDICE_ADAMW_WARMUP_COSSENO_PADRAO_lr0.0001_augTrue_seed42
+UNET_FOCALDICE_ADAMW_WARMUP_COSSENO_PADRAO_lr0.0001_augTrue_seed125
+UNET_FOCALDICE_ADAMW_WARMUP_COSSENO_PADRAO_lr0.0001_augTrue_seed2026
+UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.0001_augTrue_seed42
+UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.0001_augTrue_seed125
+UNET_FOCALDICE_ADAMW_COSSENO_PADRAO_lr0.0001_augTrue_seed2026
+--------------------------------------------------

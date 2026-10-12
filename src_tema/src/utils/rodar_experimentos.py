@@ -49,7 +49,7 @@ def rodar_experimento_completo(
     Returns:
         dict: Métricas do modelo avaliado no conjunto de teste.
     """
-    nome_modelo = f"{nome_arquitetura}_{nome_loss}_{nome_otimizador}_{nome_scheduler}_{nome_early_stopper}_lr{lr}_aug{aplicar_aug}"
+    nome_modelo = f"{nome_arquitetura}_{nome_loss}_{nome_otimizador}_{nome_scheduler}_{nome_early_stopper}_lr{lr}_aug{aplicar_aug}_seed{seed}"
     print(f"{'='*60}")
     print(f"Iniciando Experimento: {nome_modelo}")
     print(f"{'='*60}")
@@ -78,45 +78,61 @@ def rodar_experimento_completo(
         dataloader_val=dl_val,
         **kwargs
     )
+    if not divergiu:
+        print("\n[INFO] Carregando o melhor checkpoint para avaliação no conjunto de teste...")
+        modelo = pegar_modelo(nome_arquitetura).to(DEVICE)
+        caminho_checkpoint = os.path.join(PATH_RESULTS_MODELOS, f"{nome_modelo}.pt")
+        
+        carregar_checkpoint(modelo, caminho=caminho_checkpoint)
 
-    print("\n[INFO] Carregando o melhor checkpoint para avaliação no conjunto de teste...")
-    modelo = pegar_modelo(nome_arquitetura).to(DEVICE)
-    caminho_checkpoint = os.path.join(PATH_RESULTS_MODELOS, f"{nome_modelo}.pt")
-    
-    carregar_checkpoint(modelo, caminho=caminho_checkpoint)
+        print("[INFO] Avaliando o modelo (Teste)...")
+        metricas_avaliacao = avaliar_modelo(modelo, dl_teste)
+        print(f"[RESULTADOS TESTE] mDice: {metricas_avaliacao['mdice']:.4f} | mIoU: {metricas_avaliacao['miou']:.4f}")
 
-    print("[INFO] Avaliando o modelo (Teste)...")
-    metricas_avaliacao = avaliar_modelo(modelo, dl_teste)
-    print(f"[RESULTADOS TESTE] mDice: {metricas_avaliacao['mdice']:.4f} | mIoU: {metricas_avaliacao['miou']:.4f}")
+        print("\n[INFO] Salvando resultados nas tabelas (completa e de experimentos)...")
+        salvar_resultado_completo(
+            nome_modelo=nome_modelo,
+            num_epocas=num_epocas,
+            lr=lr,
+            early_stopper=nome_early_stopper,
+            otimizador=nome_otimizador,
+            scheduler=nome_scheduler,
+            loss=nome_loss,
+            usou_aug=aplicar_aug,
+            melhor_epoca=melhor_epoca,
+            melhor_mdice=melhor_mdice,
+            metricas_avaliacao=metricas_avaliacao,
+            seed=seed
+        )
 
-    print("\n[INFO] Salvando resultados nas tabelas (completa e de experimentos)...")
-    salvar_resultado_completo(
-        nome_modelo=nome_modelo,
-        num_epocas=num_epocas,
-        lr=lr,
-        early_stopper=nome_early_stopper,
-        otimizador=nome_otimizador,
-        scheduler=nome_scheduler,
-        loss=nome_loss,
-        usou_aug=aplicar_aug,
-        melhor_epoca=melhor_epoca,
-        melhor_mdice=melhor_mdice,
-        metricas_avaliacao=metricas_avaliacao
-    )
+        salvar_tabela_experimentos(
+            nome_modelo=nome_modelo,
+            num_epocas=num_epocas,
+            lr=lr,
+            early_stopper=nome_early_stopper,
+            otimizador=nome_otimizador,
+            scheduler=nome_scheduler,
+            loss=nome_loss,
+            usou_aug=aplicar_aug,
+            melhor_mdice=melhor_mdice,
+            divergiu=divergiu,
+            tempo_treino=tempo_treino
+        )
 
-    salvar_tabela_experimentos(
-        nome_modelo=nome_modelo,
-        num_epocas=num_epocas,
-        lr=lr,
-        early_stopper=nome_early_stopper,
-        otimizador=nome_otimizador,
-        scheduler=nome_scheduler,
-        loss=nome_loss,
-        usou_aug=aplicar_aug,
-        melhor_mdice=melhor_mdice,
-        divergiu=divergiu,
-        tempo_treino=tempo_treino
-    )
-
-    print(f"\n[SUCESSO] Experimento '{nome_modelo}' finalizado!")
-    return metricas_avaliacao
+        print(f"\n[SUCESSO] Experimento '{nome_modelo}' finalizado!")
+        return metricas_avaliacao
+    else:
+        salvar_tabela_experimentos(
+                nome_modelo=nome_modelo,
+                num_epocas=num_epocas,
+                lr=lr,
+                early_stopper=nome_early_stopper,
+                otimizador=nome_otimizador,
+                scheduler=nome_scheduler,
+                loss=nome_loss,
+                usou_aug=aplicar_aug,
+                melhor_mdice=0.0,
+                divergiu=divergiu,
+                tempo_treino=tempo_treino
+            )
+        return {}

@@ -17,7 +17,7 @@ def carregar_checkpoint(modelo, otimizador=None, caminho='best_model.pt'):
         raise FileNotFoundError(f"Checkpoint não encontrado em: {caminho}")
         
     print(f"=> Carregando checkpoint de: {caminho}")
-    checkpoint = torch.load(caminho)
+    checkpoint = torch.load(caminho, weights_only=False)
     
     modelo.load_state_dict(checkpoint['model_state_dict'])
     

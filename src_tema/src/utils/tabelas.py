@@ -12,7 +12,7 @@ from src.utils.paths import (
 def salvar_resultado_completo(
     nome_modelo: str, num_epocas: int, lr: float, early_stopper: str, 
     otimizador: str, scheduler: str, loss: str, usou_aug: bool, 
-    melhor_epoca: int, melhor_mdice: float, metricas_avaliacao: dict
+    melhor_epoca: int, melhor_mdice: float, metricas_avaliacao: dict, seed: int
 ) -> None:
     """
     Salva uma linha na tabela completa com os hyperparâmetros e todas 
@@ -27,6 +27,7 @@ def salvar_resultado_completo(
         "scheduler": scheduler,
         "loss": loss,
         "usou_aumento_dados": usou_aug,
+        "seed": seed,
         "melhor_epoca": melhor_epoca,
         "melhor_mdice_validacao": melhor_mdice
     }

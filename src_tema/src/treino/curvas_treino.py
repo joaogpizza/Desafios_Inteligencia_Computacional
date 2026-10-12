@@ -13,6 +13,9 @@ from src.utils.paths import (
 def plotar_losses(nome: str, historico_loss_treino: List[float], historico_loss_val: List[float]):
     """Plota e salva as curvas de loss de treino e validação."""
 
+    if len(historico_loss_treino) == 0 or len(historico_loss_val) == 0:
+        return
+
     plt.figure(figsize=(10, 6))
     
     epocas = range(1, len(historico_loss_treino) + 1)
@@ -33,6 +36,9 @@ def plotar_losses(nome: str, historico_loss_treino: List[float], historico_loss_
 def plotar_mdice_val(nome: str, historico_mdice_val: List[float]):
     """Plota e salva a curva de mDice de validação."""
 
+    if len(historico_mdice_val) == 0:
+        return
+
     plt.figure(figsize=(10, 6))
     
     epocas = range(1, len(historico_mdice_val) + 1)
@@ -51,6 +57,9 @@ def plotar_mdice_val(nome: str, historico_mdice_val: List[float]):
 
 def plotar_taxa_aprendizado(nome: str, historico_lr: List[float]) -> None:
     """Plota e salva a curva da taxa de aprendizado (Learning Rate)."""
+
+    if len(historico_lr) == 0:
+        return
 
     plt.figure(figsize=(10, 6))
     

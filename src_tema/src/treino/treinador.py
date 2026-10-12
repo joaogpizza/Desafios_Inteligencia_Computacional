@@ -149,6 +149,15 @@ def treinar_modelo(
             k=50
         )
 
+        if torch.isnan(torch.tensor(loss_treino)) or loss_treino > 1e4:
+                    divergiu = True
+                    print(f"\n[AVISO] Treinamento do modelo {nome_modelo} divergiu na época {epoca}.")
+                    historico_lr.pop()
+                    if epoca == 1:
+                        caminho_salvar = os.path.join(PATH_RESULTS_MODELOS, f"{nome_modelo}.pt")
+                        salvar_checkpoint(modelo, otimizador, epoca, caminho=caminho_salvar)
+                    break
+
         loss_val, mdice_val, _ = validar(modelo, dataloader_val, f_loss)
         
         if nome_scheduler.upper() == "REDUCE_ON_PLATEAU":
@@ -166,12 +175,7 @@ def treinar_modelo(
             caminho_salvar = os.path.join(PATH_RESULTS_MODELOS, f"{nome_modelo}.pt")
             salvar_checkpoint(modelo, otimizador, epoca, caminho=caminho_salvar)
 
-        if torch.isnan(torch.tensor(loss_treino)) or loss_treino > 1e4:
-            divergiu = True
-            print(f"\n[AVISO] Treinamento do modelo {nome_modelo} divergiu na época {epoca}.")
-            break
-
-        print(f'Final da epoca {epoca+1}, mdice = {mdice_val}')
+        print(f'Final da epoca {epoca}, mdice = {mdice_val}')
         
         _ = early_stopper(perda_val=loss_val, perda_treino=loss_treino, metrica_val=mdice_val)
         if early_stopper.parada_antecipada:
