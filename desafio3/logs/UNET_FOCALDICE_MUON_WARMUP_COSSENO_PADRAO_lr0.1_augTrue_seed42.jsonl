@@ -1,0 +1,2 @@
+{"passo": 50, "perda": NaN, "grad": NaN, "theta": 623.5911254882812, "lr": 0.04, "rho/encoder1.conv.0.weight": 0.0, "rho/decoder4.conv.0.weight": 0.0, "rho/saida.weight": 0.0}
+{"passo": 100, "perda": NaN, "grad": NaN, "theta": 656.6746826171875, "lr": 0.04, "rho/encoder1.conv.0.weight": 0.0, "rho/decoder4.conv.0.weight": 0.0, "rho/saida.weight": 0.0}
