@@ -14,7 +14,7 @@ from src.data.datasets import HistologiaDataset
 from configs.basicas import TAM_BATCH
 
 def criar_dataloaders(
-    num_workers: int, 
+    num_workers: int = 0, 
     aplicar_aug: bool = False,
     fracao_dados: float = 1.0
 ) -> Tuple[DataLoader, DataLoader, DataLoader]:
