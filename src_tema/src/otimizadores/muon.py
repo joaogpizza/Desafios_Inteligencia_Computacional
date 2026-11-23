@@ -27,6 +27,9 @@ class MuonAdamW(Optimizer):
         
         self.adamw_lr_ratio = adamw_lr / lr if lr > 0 else 1.0
 
+        # ids para checar pertencimento sem comparar tensores com "==" (que quebra com formas diferentes)
+        self._ids_muon = {id(p) for p in self.muon_params}
+
     def step(self, closure=None):
         loss = None
         if closure is not None:
@@ -49,7 +52,7 @@ class MuonAdamW(Optimizer):
             ns_steps = group['ns_steps']
             
             for p in group['params']:
-                if p not in self.muon_params or p.grad is None:
+                if id(p) not in self._ids_muon or p.grad is None:
                     continue
                     
                 grad = p.grad
