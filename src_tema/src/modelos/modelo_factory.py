@@ -4,6 +4,7 @@ import torch.nn as nn
 
 from src.modelos.attention_unet import AttentionUNet
 from src.modelos.unet import UNet
+from src.modelos.ukan import UKAN
 
 def pegar_modelo(nome: str) -> nn.Module:
     """
@@ -11,6 +12,7 @@ def pegar_modelo(nome: str) -> nn.Module:
 
     - "ATUNET": Attention U-Net definida em src/modelos/attention_unet.py
     - "UNET": U-Net padrão definida em src/modelos/unet.py
+    - "UKAN": U-KAN definida em src/modelos/ukan.py
 
     Levanta ValueError caso o nome informado seja diferente de
     um listado.
@@ -19,5 +21,7 @@ def pegar_modelo(nome: str) -> nn.Module:
         return AttentionUNet()
     elif nome.upper() == "UNET":
         return UNet()
+    elif nome.upper() == "UKAN":
+        return UKAN()
     else:
         raise ValueError("Arquitetura desconhecida")
