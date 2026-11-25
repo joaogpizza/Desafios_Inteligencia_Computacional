@@ -21,10 +21,10 @@ def fluxo_mestre():
     resultados_e1 = []
     
     for s in seeds_baseline:
-        nome_e1 = formatar_nome_d3("UNET", "FOCALDICE", "ADAMW", "COSSENO", "PADRAO", 0.001, True, s)
+        nome_e1 = formatar_nome_d3("UKAN", "FOCALDICE", "ADAMW", "COSSENO", "PADRAO", 0.001, True, s)
         if not experimento_ja_executado(nome_e1):
             rodar_experimento_completo(
-                nome_arquitetura="UNET", nome_loss="FOCALDICE", nome_otimizador="ADAMW",
+                nome_arquitetura="UKAN", nome_loss="FOCALDICE", nome_otimizador="ADAMW",
                 nome_scheduler="COSSENO", nome_early_stopper="PADRAO", lr=0.001,
                 aplicar_aug=True, seed=s, fracao_dados=0.1, num_workers=NUM_WORKERS
             )
@@ -41,10 +41,10 @@ def fluxo_mestre():
     
     for opt in otimizadores_disponiveis:
         for lr in lrs_teste:
-            nome_e2 = formatar_nome_d3("UNET", "FOCALDICE", opt, "WARMUP_COSSENO", "PADRAO", lr, True, seed_etapa2)
+            nome_e2 = formatar_nome_d3("UKAN", "FOCALDICE", opt, "WARMUP_COSSENO", "PADRAO", lr, True, seed_etapa2)
             if not experimento_ja_executado(nome_e2):
                 rodar_experimento_completo(
-                    nome_arquitetura="UNET", nome_loss="FOCALDICE", nome_otimizador=opt,
+                    nome_arquitetura="UKAN", nome_loss="FOCALDICE", nome_otimizador=opt,
                     nome_scheduler="WARMUP_COSSENO", nome_early_stopper="PADRAO", lr=lr,
                     aplicar_aug=True, seed=seed_etapa2, fracao_dados=0.1, num_workers=NUM_WORKERS
                 )
@@ -75,10 +75,10 @@ def fluxo_mestre():
     for opt in top_opts:
         melhor_lr = avaliacoes_opt[opt]["lr"]
         for sched in schedulers:
-            nome_e3 = formatar_nome_d3("UNET", "FOCALDICE", opt, sched, "PADRAO", melhor_lr, True, 42)
+            nome_e3 = formatar_nome_d3("UKAN", "FOCALDICE", opt, sched, "PADRAO", melhor_lr, True, 42)
             if not experimento_ja_executado(nome_e3):
                 rodar_experimento_completo(
-                    nome_arquitetura="UNET", nome_loss="FOCALDICE", nome_otimizador=opt,
+                    nome_arquitetura="UKAN", nome_loss="FOCALDICE", nome_otimizador=opt,
                     nome_scheduler=sched, nome_early_stopper="PADRAO", lr=melhor_lr,
                     aplicar_aug=True, seed=42, fracao_dados=0.1, num_workers=NUM_WORKERS
                 )
@@ -108,7 +108,7 @@ def fluxo_mestre():
     for modelo_dict in top_3_execucoes:
         row = modelo_dict["row"]
         for s in seeds_e4:
-            nome_arq_recuperado = row.get("nome_arquitetura", "UNET")
+            nome_arq_recuperado = row.get("nome_arquitetura", "UKAN")
             nome_e4 = formatar_nome_d3(
                 nome_arq_recuperado, row["loss"], row["otimizador"], 
                 row["scheduler"], row["early_stopper"], row["learning_rate"], 
