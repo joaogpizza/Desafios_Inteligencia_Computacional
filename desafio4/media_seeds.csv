@@ -1,0 +1,2 @@
+experimento,seeds,n_seeds,melhor_mdice_validacao,mdice,miou,classe_1_precision,classe_1_recall
+UKAN_FOCALDICE_SGD_COSSENO_PADRAO_lr0.1_augTrue,42;125;2026,3,0.9396053221032235,0.9342487576972779,0.8915610068136912,0.771316286640082,0.7409522054215385
