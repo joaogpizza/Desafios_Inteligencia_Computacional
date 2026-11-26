@@ -33,7 +33,7 @@ class KANLinear(nn.Module):
             escala_ruido: float = 0.1,
             escala_base: float = 1.0,
             escala_spline: float = 1.0,
-            faixa_grid: Tuple[float, float] = (-2.5, 2.5)
+            faixa_grid: Tuple[float, float] = (-1.0, 1.0)
         ) -> None:
         super().__init__()
         self.features_entrada = features_entrada
